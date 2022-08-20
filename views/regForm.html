@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>User Registration</title>
+
+    <style>
+
+        body {
+
+            background-image: url('Bg.jpg');
+
+            background-repeat: no-repeat;
+
+        }
+
+        div {
+
+          background-color: white;
+
+          margin: auto;
+
+          width: 40%;
+
+          border: 3px solid orange;
+
+          border-radius: 10px;
+
+          padding: 25px 50px 75px 100px;
+
+          padding: 5px;
+
+          line-height: 2;
+
+        }
+
+        h2,p{
+
+            text-align:center;
+
+        }
+
+        input{
+
+            padding: 8px;
+
+        }
+
+        #name,#email,#phn{
+
+            width: 590px;
+
+        }
+
+
+
+    </style>
+
+</head>
+
+<body>
+
+    <div>
+
+       
+
+        <h2 style="color:orange;">Register Here</h2>
+
+        
+
+        <p><i>Fill in your details below</i></p>
+
+        <hr>
+
+        <form action="/" method="post">
+
+            <label for="name">Name:</label><br>
+
+            <input type="text" id="name" name="name" value="" ><br>
+
+            <label for="email">Email:</label><br>
+
+            <input type="email" id="email" name="email" value=""><br>
+
+            <label for="phn">Phone:</label><br>
+
+            <input type="tel" id="phn" name="phn" value="" ><br>
+
+            <br>
+
+            <input type="submit" value="Get a Call" style="color : white;height:50px; width:610px; background-color:orange; border: none; border-radius: 5px;">
+
+        </form>
+
+    </div>
+
+    <script>
+
+        function submited() {
+
+            console.log(document.getElementById("name").value,document.getElementById("email").value,document.getElementById("phn").value,document.getElementById("Cdate").value,document.getElementById("tim").value);
+
+        }
+
+    </script>
+
+</body>
+
+</html>

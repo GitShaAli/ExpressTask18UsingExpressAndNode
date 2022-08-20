@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>JS</title>
+    <!-- <link rel="stylesheet" href="style.css"> -->
+  </head>
+  <body>
+    <header>
+      <h1>Booking Appoinment</h1>
+    </header>
+
+    <section class="container">
+      <form id="my-form">
+        <h1>Add User</h1>
+        <div class="msg" id ="msg"></div>
+        <div>
+          <label for="name">Name:</label>
+          <input type="text" id="name">
+        </div>
+        <div>
+          <label for="email">Email:</label>
+          <input type="text" id="email">
+        </div>
+        <input class="btn" type="submit" value="Submit">
+      </form>
+      <ul id="lStrorage">
+
+      </ul>
+
+     <!-- <ul id="users"></ul>
+       <ul class="items">
+        <li class="item">Item 1</li>
+        <li class="item">Item 2</li>
+        <li class="item">Item 3</li>
+      </ul> -->
+    </section>
+    <script src ="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js"></script>
+
+    <script type="text/javascript">
+
+
+        var form = document.getElementById('my-form');
+        form.addEventListener('submit',additem);
+        var i = 0;
+
+
+       function removeUserFromScreen(em){
+            const parentNode = document.getElementById('lStrorage');
+            const childnode = document.getElementById(em);
+            if(childnode){
+                parentNode.removeChild(childnode);
+            }
+
+       }
+
+
+        function additem(e){
+            e.preventDefault();
+
+            var nameIN = document.getElementById('name').value;
+            var emailIN = document.getElementById('email').value;
+            if (localStorage.getItem(emailIN) !== null){
+
+                localStorage.removeItem(emailIN);
+                removeUserFromScreen(emailIN);
+            }
+                // localStorage.setItem('Name',name);
+                // localStorage.setItem('Email',email);
+            let myObj = {
+                    name : nameIN,
+                    email : emailIN
+            };
+            let myObj_serialized = JSON.stringify(myObj);
+
+            //localStorage.setItem(emailIN,myObj_serialized);
+            axios.post("https://crudcrud.com/api/1ffae248827a40c4bcb56c416660c331/Bookings",myObj)
+            .then((response)=>{
+                document.body.innerHTML=document.body.innerHTML+JSON.stringify(response.data);
+                console.log(response)
+            })
+            .catch((err)=>{
+                document.body.innerHTML=document.body.innerHTML+'Something went wrong.'
+                console.log(err)
+            })
+            let myobj_deserialized = JSON.parse(localStorage.getItem(emailIN));
+            var ul = document.getElementById('lStrorage');
+
+            // const childHTML = `<li id=${myObj.email}> ${myobj_deserialized .name} - ${myobj_deserialized .email}
+            //                             <button onclick=deleteUser('${myobj_deserialized.email}')> Delete</button>
+            //                             <button onclick=editUser('${myobj_deserialized.email}','${myobj_deserialized.name}')> Edit </button>
+            //                          </li>`
+
+            // ul.innerHTML = ul.innerHTML + childHTML;
+
+        }
+
+        function deleteUser(emailId){
+                console.log(emailId)
+                localStorage.removeItem(emailId);
+                removeUserFromScreen(emailId);
+
+        }
+        function editUser(emailId){
+                document.getElementById('email').value = emailId;
+                document.getElementById('name').value = name;
+                deleteUser(emailId)
+        }
+
+
+        window.addEventListener('DOMContentLoaded', (event) => {
+            let d = document.getElementById("lStrorage");
+            let mail;
+            for (var i = 0; i < localStorage.length; i++) { 
+                mail = localStorage.key(i);
+                let myobj_deserialized = JSON.parse(localStorage.getItem(mail));
+                var newText = document.createTextNode(' Name : '+myobj_deserialized.name+" Email : "+myobj_deserialized.email);
+                d.insertAdjacentHTML('beforeend', '<li id='+myobj_deserialized.email+'>'+newText.textContent+`<button onclick=deleteUser('${myobj_deserialized .email}')> Delete </button><button onclick=editUser('${myobj_deserialized.email}','${myobj_deserialized.name}')> Edit </button></li>`); 
+            }
+
+        });
+    </script>
+  </body>
+</html>
